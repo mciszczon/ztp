@@ -1,62 +1,75 @@
 import re
+import csv
 from collections import Counter
-import numpy
+
+
+class Handler:
+    """
+    File handler
+    """
+    def __init__(self, filename: str) -> None:
+        self.filename = filename
+
+    def __words_from_line(self, line: str) -> list:
+        "Zwraca listę słów dla linijki tekstu unicode."
+        words = re.split(r'[\W\d]+', line)
+        return [w.lower() for w in words if w]
+
+    @property
+    def lines(self) -> list:
+        with open(self.filename, "r") as file:
+            return file.readlines()
+
+    @property
+    def words(self) -> list:
+        words = []
+        for line in self.lines:
+            [words.append(word) for word in self.__words_from_line(line)]
+        return words
+
+    def write(self, data: iter) -> None:
+        with open(self.filename, 'w', encoding='utf8') as file:
+            writer = csv.writer(file)
+            for i, item in data:
+                writer.writerow((i+1, item[0], item[1]))
+
+
+class Freq:
+    """
+    Class for calculating freq list
+    """
+    def __init__(self, words: list) -> None:
+        self.words = words
+
+    @property
+    def freq(self) -> iter:
+        """Creates frequency dict"""
+        d = Counter(self.words)
+        return enumerate(sorted(d.items(), key=lambda kv: kv[1], reverse=True))
+
+    def print(self):
+        """
+        Prints frequency dict in form:
+        position: int, word: str, num: int (number of times it appeared in the text)
+        """
+        for i, item in self.freq:
+            print("{}, {}, {}".format(i+1, item[0], item[1]))
+
 
 """
-TODO: OOP
-TODO: Use import csv
+Main Block
 """
 
-def get_result():
-    with open('wiki.txt', 'r') as file:
-        text = file.read().rstrip().replace("\n", " ").lower()
-        d = Counter(re.compile('[,\.!?\(\)„”]').sub('', text).split(" "))
 
-        print("Created list!")
-        return  enumerate(sorted(d.items(), key=lambda kv: kv[1], reverse=True))
+def main():
+    wiki = Handler("wiki.txt")
+    freq = Freq(wiki.words)
 
-def write_file(result):
-    with open('wiki.csv', 'w') as file:
-        for i, item in result:
-            file.writelines("{},{},{}\n".format(i+1, item[0], item[1]))
-        else:
-            print("Wrote to file!")
+    result = Handler("wiki.csv")
+    result.write(freq.freq)
 
-def count_const(result):
-    numbers = [i * num[1] for i, num in result]
-    print(sum(numbers)/len(numbers))
-
-result = get_result()
-write_file(result)
-
-result = get_result()
-count_const(result)
+    return True
 
 
-"""
-HELPERS
-"""
-
-# import csv
-
-# file  = 'wiki.txt'
-# file_new = 'lista_frekwencyjna.csv'
-# slownik = {}
-
-# with open(file, 'r', encoding='utf8') as f:
-#   for linia in f:
-#     slowa = linia.split()
-#     slowa = [item.lower().strip(',.;-_–%()[]{}+=&*$#@/\\!?\'"') for item in slowa]
-#     for slowo in slowa:
-#       if slowo:
-#         if slowo not in slownik:
-#           slownik[slowo] = 0
-#         slownik[slowo] += 1
-
-  
-# with open(file_new, 'w', encoding='utf8') as f:
-#   writer = csv.writer(f)
-#   i=1
-#   for w in sorted(slownik, key=slownik.get, reverse=True):
-#     writer.writerow( (i, w, slownik[w]) )
-#     i+=1
+if __name__ == "__main__":
+    main()
