@@ -1,3 +1,6 @@
+from utils.handler import Handler
+from utils.ngram import Ngram
+
 """
 1. Tworzę 1-, 2-, 3-gramy (może być więcej) dla obu porównywanych języków (tekstów). W ten sposób powstaje `x` i `y`.
    Porównuję tylko ngramy o takiej samej krotności! Czyli 1-gramy `x` z 1-gramami `y` itd.
@@ -7,3 +10,20 @@
 
 Długość wektora len(x): √x1^2 + x2^2 + x3^2 + ... + xn^2 (pierwiastek nad całością)
 """
+
+"""
+Main Block
+"""
+
+def main():
+    # handler = Handler("pol1.txt")
+    # ngram = Ngram(handler.words)
+
+    print("Language guesser. Enter a phrase consisting of at least few words:")
+    phrase = input()
+
+    print(phrase)
+    return True
+
+if __name__ == "__main__":
+  main()
