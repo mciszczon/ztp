@@ -1,5 +1,8 @@
+import os
 from utils.handler import Handler
 from utils.ngram import Ngram
+from utils.helpers import words_from_line
+from constants.languages import TEST_LANGS, LANGUAGES, POL, ENG, GER, ITA, SPA, FIN
 
 """
 1. Tworzę 1-, 2-, 3-gramy (może być więcej) dla obu porównywanych języków (tekstów). W ten sposób powstaje `x` i `y`.
@@ -16,13 +19,22 @@ Main Block
 """
 
 def main():
-    # handler = Handler("pol1.txt")
-    # ngram = Ngram(handler.words)
-
     print("Language guesser. Enter a phrase consisting of at least few words:")
     phrase = input()
+    phrase_ngram = Ngram(words_from_line(phrase))
+    phrase_dataset = phrase_ngram.get_dataset()
 
-    print(phrase)
+    languages_handlers = dict()
+    language_datasets = dict()
+    
+    os.chdir(os.getcwd() + "/texts")
+    for language in TEST_LANGS:
+        handler = languages_handlers[language] = Handler(LANGUAGES[language])
+        ngram = Ngram(handler.words)
+        language_datasets[language] = ngram.get_dataset()
+
+    import pdb; pdb.set_trace()
+        
     return True
 
 if __name__ == "__main__":
