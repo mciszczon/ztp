@@ -20,14 +20,15 @@ def cosinus_similiarity(phrase_dataset: dict, language_dataset: dict) -> float:
 
 def euclides_similiarity(phrase_dataset: dict, language_dataset: dict) -> float:
     """
-    TODO: What should it return?
+    TODO: Not working!
     """
     summed = 0
     for ngram in language_dataset.keys():
         summed += ((phrase_dataset.get(ngram) or 0) - language_dataset[ngram])**2
     
-    
+
     return sqrt(summed)
+
 
 
 calc_functions = {
