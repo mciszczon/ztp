@@ -24,7 +24,8 @@ def euclides_similiarity(phrase_dataset: dict, language_dataset: dict) -> float:
     """
     summed = 0
     for ngram in language_dataset.keys():
-        summed += (language_dataset[ngram] - (phrase_dataset.get(ngram) or 0))**2
+        summed += ((phrase_dataset.get(ngram) or 0) - language_dataset[ngram])**2
+    
     
     return sqrt(summed)
 

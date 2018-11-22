@@ -35,6 +35,7 @@ def main():
     for language in LANGUAGES:
         languages_similiarity[language] = calc_functions[function_loader](phrase_dataset, languages_datasets[language])
 
+    print("The langauge is: {}".format(min(languages_similiarity)))
     print(languages_similiarity)
         
     return True
