@@ -1,28 +1,27 @@
 from .matrix import Matrix
 
-"""
-1. √ Store words separately (it's already stored as strs are iterable)
-2. √ Create Matrix[len(A), len(B)]
-3. √ Fill Matrix[0] with range(0, len(A)+1)
-5. Iterate over rows:
-    Iterate columns (Y):
-        Matrix[X][Y] = Matrix[X][Y-1] + 1
-                        <or> Matrix[X-1][Y] + 1 
-                        <or> Matrix[X-1][Y-1] + 1
-                        <or> Matrix[X-1][Y-1] + 0 if same letters
-6. Matrix[len(A), len(B)] is the answer!
-"""
 
-def levenstein(word1: str, word2: str) -> int:
-    width, height = len(word1) + 1, len(word2) + 1
-    matrix = Matrix(width, height).matrix
+class Levenstein:
 
-    for row_i, row in enumerate(matrix):
-        for col_i, col in enumerate(row):
-            if col_i > 0 and row_i > 0:
-                matrix[row_i][col_i] = matrix[row_i][col_i-1] + 1
-    
-    for row in matrix:
-        print(row)
+    def __init__(self, word1: str, word2: str) -> None:
+        self.word1 = word1
+        self.word2 = word2
+        self.matrix = Matrix(word1, word2)
+        self.array = self.matrix.array
+        self.__calculate()
 
-    return True
+    def __calculate(self) -> int:
+        for row_i, row in enumerate(self.array):
+            for col_i, col in enumerate(row):
+                if col_i > 0 and row_i > 0:
+                    var1 = self.array[row_i][col_i-1] + 1
+                    var2 = self.array[row_i-1][col_i] + 1
+                    var3 = self.array[row_i-1][col_i-1] + 1
+
+                    if self.word1[col_i-1] == self.word2[row_i-1]:
+                        var3 -= 1
+
+                    self.array[row_i][col_i] = min(var1, var2, var3)
+
+    def __str__(self) -> str:
+        return "{}/{}: {}".format(self.word1, self.word2, self.matrix.right_bottom)

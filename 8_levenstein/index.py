@@ -1,19 +1,18 @@
-from utils.levenstein import levenstein
+from utils.levenstein import Levenstein
 
-"""
-Macierz dwuwymiarowa, w jednym wymiarze słowo a, w drugim b.
 
-Wynik z góry    +1
-Wynik z lewej   +1
-(-1, -1)        +1 lub +0 jeśli litery te same na przecięciu
-"""
+def main() -> None:
+    pairs = [
+        ('pies', 'pies'),
+        ('granat', 'granit'),
+        ('orczyk', 'oracz'),
+        ('marka', 'ariada'),
+        ('izrael', 'stein'),
+        ('izrael', 'blumensztajn'),
+    ]
 
-def main() -> bool:
-    print(levenstein('pies', 'pies'))
-    print(levenstein('granat', 'granit'))
-    print(levenstein('orczyk', 'oracz'))
-    print(levenstein('marka', 'ariada'))
-    return True
+    for pair in pairs:
+        print(Levenstein(*pair))
 
 
 if __name__ == "__main__":
