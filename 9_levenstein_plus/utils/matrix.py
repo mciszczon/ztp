@@ -8,7 +8,7 @@ class Matrix:
     dimensions = (0, 0)
     array = list()
 
-    def __init__(self, word1: int, word2: int) -> None:
+    def __init__(self, word1: str, word2: str) -> None:
         self.width = len(word1) + 1
         self.height = len(word2) + 1
         self.dimensions = (self.width, self.height)
@@ -28,6 +28,6 @@ class Matrix:
             self.array[i][0] = i
 
     @property
-    def right_bottom(self) -> int:
+    def right_bottom(self) -> float:
         """ Returns the right-bottom value from matrix"""
-        return self.array[-1][-1]
+        return round(float(self.array[-1][-1]), 1)
