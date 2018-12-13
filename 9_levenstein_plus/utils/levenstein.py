@@ -30,17 +30,17 @@ class Levenstein:
             val -= 1
 
         # Missing or added unnecessary diacritics
-        if diacritics.get(self.word1[col-1]) == self.word2[row-1] \
+        elif diacritics.get(self.word1[col-1]) == self.word2[row-1] \
            or self.word1[col-1] == diacritics.get(self.word2[row-1]):
             val -= 0.8
 
         # Ortographic mistakes with digraphs: ch and rz
-        if self.word1[col-1].upper() == self.word2[row-1] \
+        elif self.word1[col-1].upper() == self.word2[row-1] \
            or self.word1[col-1] == self.word2[row-1].upper():
             val -= 0.5
 
         # Single-character ortographic mistakes, like u:ó
-        if ortographics.get(self.word1[col-1]) == self.word2[row-1] \
+        elif ortographics.get(self.word1[col-1]) == self.word2[row-1] \
            or self.word1[col-1] == ortographics.get(self.word2[row-1]):
             val -= 0.5
 
