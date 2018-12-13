@@ -5,6 +5,11 @@ digraphs = {
     'rz': 'Ż',
 }
 
+digraphs_reverse = {
+    'H': 'ch',
+    'Ż': 'rz',
+}
+
 diacritics = BiDict({
     'a': 'ą',
     'c': 'ć',

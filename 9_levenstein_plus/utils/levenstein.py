@@ -1,5 +1,5 @@
 from .matrix import Matrix
-from .langkit import digraphs, diacritics, ortographics
+from .langkit import digraphs, digraphs_reverse, diacritics, ortographics
 from .bidict import BiDict
 
 
@@ -21,12 +21,50 @@ class Levenstein:
         for digraph in digraphs.keys():
             word = word.replace(digraph, digraphs[digraph])
 
-        return word
+        return list(word)
 
     def __check_chars(self, val: float, row: int, col: int) -> int:
         """ Checks if chars are the same or the same but with mistakes """
+        flag = False
+
+        # if char is uppercase, then split it into two chars and compare these chars instead of real self.word elements
+        # which char? current for word1 or current for word2
+
+        # Transposed digits
+        if col < len(self.word1) and row < len(self.word2):
+            ch1, ch2 = None, None
+            if self.word1[col-1].isupper():
+                ch1 = digraphs_reverse.get(self.word1[col-1])
+            if self.word2[row-1].isupper():
+                ch2 = digraphs_reverse.get(self.word2[row-1])
+
+            if ch1 or ch2:
+                # Substract 1.5 as the text for next letter will fail, giving unwanted +1
+                if ch1 and not ch2:
+                    if (ch1[0] == self.word2[row] and ch1[1] == self.word2[row-1]) \
+                        and (ch1[1] == self.word2[row-1] and ch1[0] == self.word2[row]):
+                        val -= 1.5
+
+                if not ch1 and ch2:
+                    if (self.word1[col-1] == ch2[1] and self.word1[col] == ch2[0]) \
+                        and (self.word1[col] == ch2[0] and self.word1[col-1] == ch2[1]):
+                        val -= 1.5
+
+                if ch1 and ch2:
+                    if (ch1[0] == ch2[1] and ch1[1] == ch2[0]) \
+                        and (ch1[1] == ch2[0] and ch1[0] == ch2[1]):
+                        val -= 1.5
+
+            elif (self.word1[col-1] == self.word2[row] and self.word1[col] == self.word2[row-1]) \
+                  and (self.word1[col] == self.word2[row-1] and self.word1[col-1] == self.word2[row]):
+                # Swap letters
+                self.word1[col-1], self.word1[col] = self.word1[col], self.word1[col-1]
+                # Set flag to skip same letters check
+                val -= 0.5
+                flag = True
+
         # Same letters
-        if self.word1[col-1] == self.word2[row-1]:
+        if self.word1[col-1] == self.word2[row-1] and not flag:
             val -= 1
 
         # Missing or added unnecessary diacritics
@@ -43,8 +81,6 @@ class Levenstein:
         elif ortographics.get(self.word1[col-1]) == self.word2[row-1] \
            or self.word1[col-1] == ortographics.get(self.word2[row-1]):
             val -= 0.5
-
-        # Czeski błąd TODO
 
         return val
 
