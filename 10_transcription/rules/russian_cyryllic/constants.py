@@ -1,0 +1,10 @@
+W = "wovels"
+C = "consonants"
+HS = "hard sign"
+SS = "soft sign"
+WS = "word start"
+WE = "word end"
+O = "other"
+
+PRE = "pre"
+POST = "post"
