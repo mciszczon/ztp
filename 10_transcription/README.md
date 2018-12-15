@@ -10,3 +10,10 @@ Just enter the root folder of the app and run `pytest`. Ensure you have all the 
 - `/rules` contains rules on how to transcribe various languages
 - `/utils` contains all the classes and functions that operate on input data and rules
 - `/tests` contains tests for all the app
+
+## Roadmap
+- [x] Write first, dirty implementation
+- [ ] Keep capital letters
+- [ ] Store special chars (period, commas, new lines...) and include them in the result
+- [ ] Finish `constants` definitions
+- [ ] Use more sophisticated transposition logic (with pre- and post- lookups)
