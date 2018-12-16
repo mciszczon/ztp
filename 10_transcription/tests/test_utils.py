@@ -13,8 +13,8 @@ class TestTextHandler:
 
 class TestConverter:
 
-    def test_converter_creation(self, text_handler, russian_rules):
-        converter = Converter(text_handler, russian_rules)
+    def test_converter_creation(self, text_handler, russian_rules, russian_constants, russian_lookups):
+        converter = Converter(text_handler, russian_rules, russian_constants, russian_lookups)
         assert type(converter) == Converter
         assert type(converter.text_handler) == TextHandler
         assert type(converter.rules) == dict
@@ -25,3 +25,6 @@ class TestConverter:
 
     def test_converter_transposed(self, converter):
         assert type(converter.transposed) == str
+
+    def test_converter_our_father(self, converter, our_father_russian, our_father_latin):
+        assert converter.transposed == our_father_latin

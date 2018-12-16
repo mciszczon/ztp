@@ -13,7 +13,7 @@ Just enter the root folder of the app and run `pytest`. Ensure you have all the 
 
 ## Roadmap
 - [x] Write first, dirty implementation
-- [ ] Keep capital letters
+- [x] Keep capital letters
 - [ ] Store special chars (period, commas, new lines...) and include them in the result
 - [ ] Finish `constants` definitions
 - [ ] Use more sophisticated transposition logic (with pre- and post- lookups)

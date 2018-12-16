@@ -2,7 +2,7 @@ import pytest
 from functools import partial
 from utils.text_handler import TextHandler
 from utils.converter import Converter
-from rules.russian_cyryllic.russian_cyryllic import russian_cyryllic
+from rules.russian_cyryllic.russian_cyryllic import russian_cyryllic, constants, lookups
 
 
 """
@@ -64,5 +64,13 @@ def russian_rules():
     return russian_cyryllic
 
 @pytest.fixture
-def converter(text_handler, russian_rules):
-    return Converter(text_handler, russian_rules)
+def russian_constants():
+    return constants
+
+@pytest.fixture
+def russian_lookups():
+    return lookups
+
+@pytest.fixture
+def converter(text_handler, russian_rules, russian_constants):
+    return Converter(text_handler, russian_rules, russian_constants, russian_lookups)
