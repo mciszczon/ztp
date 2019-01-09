@@ -9,8 +9,8 @@ def main() -> None:
     string2 = input()
 
     matrix = Matrix(string1, string2)
-    for row in matrix.array:
-        print(row)
+    print(f"Najdłuższy wspólny podciąg: {matrix.right_bottom}")
+    print(f"LCS: {matrix.lcs}")
 
 
 if __name__ == "__main__":
