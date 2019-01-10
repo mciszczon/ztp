@@ -11,7 +11,7 @@ class Handler:
 
     def __words_from_line(self, line: str) -> set:
         """ Zwraca listę słów dla linijki tekstu unicode. """
-        words = re.split(r'[\W\d]+', line)
+        words = re.split(r'[\s\,]+', line)
         return set([w for w in words if w])
 
     @property
